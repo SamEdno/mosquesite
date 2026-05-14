@@ -1,0 +1,632 @@
+/* ======================================================
+   DESIGN SYSTEM
+====================================================== */
+:root{
+  --bg1:#020b10;
+  --bg2:#031510;
+  --panel: rgba(255,255,255,0.06);
+  --panel2: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.14);
+  --text:#e9f7f1;
+  --muted: rgba(233,247,241,0.78);
+  --gold:#ffd700;
+
+  --shadow: 0 22px 70px rgba(0,0,0,0.45);
+  --radius: 22px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+
+  /* Desert night */
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(255,215,0,0.12), transparent 60%),
+    radial-gradient(900px 500px at 15% 20%, rgba(130,210,255,0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg1) 100%);
+  overflow-x: hidden;
+}
+
+/* ======================================================
+   BACKGROUND LAYERS (stars + ramadan text + dunes)
+====================================================== */
+
+/* Stars */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+  background-size: 70px 70px, 120px 120px;
+  background-position: 0 0, 20px 40px;
+  animation: starDrift 160s linear infinite;
+  z-index: 0;
+}
+
+@keyframes starDrift{
+  from{ transform: translateY(0); }
+  to{ transform: translateY(-900px); }
+}
+
+/* Ramadan calligraphy watermark */
+body::after{
+  content:"رمضان كريم";
+  position: fixed;
+  inset: 0;
+  display:grid;
+  place-items:center;
+  font-size: clamp(80px, 16vw, 220px);
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: rgba(255,215,0,0.07);
+  font-family: "Playfair Display", serif;
+  pointer-events:none;
+  z-index: 0;
+  text-shadow: 0 0 60px rgba(255,215,0,0.12);
+}
+
+/* ======================================================
+   LAYOUT BASICS
+====================================================== */
+.container{
+  width: min(1100px, calc(100% - 36px));
+  margin-inline: auto;
+}
+
+.topbar, .hero, main, footer{
+  position: relative;
+  z-index: 1;
+}
+
+/* ======================================================
+   TOPBAR (NO LINES ON SCROLL)
+====================================================== */
+.topbar{
+  position: sticky;
+  top:0;
+  z-index: 50;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(3,21,16,0.55);
+  border: none; /* <<< махната линия */
+}
+
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 0;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+
+.brand-mark{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,215,0,0.12);
+  border: none;
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.brand-title{
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.brand-sub{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ======================================================
+   NAV
+====================================================== */
+.nav{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav a{
+  color: rgba(255,255,255,0.9);
+  text-decoration:none;
+  font-weight: 650;
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.nav a:hover{
+  transform: translateY(-1px);
+  background: rgba(255,215,0,0.12);
+  color: var(--gold);
+}
+
+/* ======================================================
+   HERO
+====================================================== */
+.hero{
+  position: relative;
+  min-height: 76vh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  padding: 60px 0 28px;
+}
+
+
+
+
+/* ======================================================
+   HERO CARD
+====================================================== */
+.hero-card{
+  width: min(900px, 100%);
+  text-align:center;
+  padding: clamp(22px, 4vw, 46px);
+  border-radius: calc(var(--radius) + 6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.hero h1{
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(34px, 4.2vw, 64px);
+  color: var(--gold);
+}
+
+.hero p{
+  margin: 0 auto;
+  max-width: 70ch;
+  color: var(--muted);
+}
+
+.ayah{
+  display:block;
+  margin-top: 14px;
+  font-style: italic;
+  color: rgba(255,243,163,0.92);
+}
+
+/* ======================================================
+   SECTIONS & CARDS
+====================================================== */
+.section{
+  padding: clamp(52px, 7vw, 92px) 0;
+}
+
+.section-head{
+  text-align:center;
+  margin-bottom: 20px;
+}
+
+.section-head h2{
+  font-family: "Playfair Display", serif;
+  color: var(--gold);
+}
+
+.section-sub{
+  color: var(--muted);
+}
+
+.card{
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel), var(--panel2));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  padding: clamp(18px, 3vw, 34px);
+}
+
+/* ======================================================
+   PRAYERS
+====================================================== */
+.prayers-card{
+  text-align: center;
+  width: min(860px, 100%);
+  margin-inline: auto;
+}
+
+.prayers-grid{
+  width: min(560px, 100%);
+  margin: 16px auto 0;
+  display:grid;
+  gap: 10px;
+}
+
+.prayers-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.22);
+}
+
+.prayers-row.head{
+  background: rgba(255,215,0,0.12);
+}
+
+.cell{
+  font-weight: 700;
+}
+
+.cell.right{ text-align:right; }
+.time{ color: rgba(255,243,163,0.95); }
+
+.prayers-note{
+  margin-top: 16px;
+  font-size: 13px;
+  color: rgba(233,247,241,0.65);
+}
+
+/* ======================================================
+   HADITHS
+====================================================== */
+.hadith-card{
+  text-align: center;
+  width: min(920px, 100%);
+  margin-inline: auto;
+}
+
+.hadith-ar{
+  margin: 14px auto 10px;
+  max-width: 60ch;
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1.65;
+  color: rgba(255,243,163,0.95);
+}
+
+.hadith-bg{
+  max-width: 70ch;
+  margin: 0 auto;
+  color: rgba(233,247,241,0.82);
+}
+
+/* ======================================================
+   BUTTONS
+====================================================== */
+.btn{
+  margin-top: 16px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #031510;
+  font-weight: 800;
+  border: none;
+  cursor:pointer;
+  box-shadow: 0 16px 40px rgba(255,215,0,0.18);
+}
+
+/* ======================================================
+   FOOTER (NO LINE)
+====================================================== */
+.footer{
+  padding: 22px 0;
+  text-align:center;
+  color: rgba(255,215,0,0.85);
+  border: none; /* <<< махната линия */
+}
+/* ===== DONATE SECTION ===== */
+.donate-layout{
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 920px){
+  .donate-layout{ grid-template-columns: 1fr; }
+}
+
+.donate-card{
+  text-align: left;
+}
+
+.donate-badge{
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 12px;
+  color: rgba(255,243,163,0.95);
+  background: rgba(255,215,0,0.10);
+  border: 1px solid rgba(255,215,0,0.20);
+}
+
+.donate-title{
+  margin: 12px 0 8px;
+  font-size: clamp(18px, 2vw, 24px);
+  color: rgba(255,215,0,0.95);
+}
+
+.donate-text{
+  margin: 0 0 16px;
+  color: rgba(233,247,241,0.78);
+  max-width: 70ch;
+}
+
+.donate-details{
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.donate-item{
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+}
+
+.donate-label{
+  font-size: 12px;
+  color: rgba(233,247,241,0.65);
+  font-weight: 700;
+}
+
+.donate-value{
+  font-weight: 750;
+  color: rgba(255,255,255,0.92);
+}
+
+.mono{
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.donate-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.btn-ghost{
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content:center;
+}
+
+.btn-ghost:hover{
+  border-color: rgba(255,215,0,0.22);
+  background: rgba(255,215,0,0.08);
+  color: rgba(255,243,163,0.95);
+}
+
+.donate-footnote{
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(233,247,241,0.62);
+}
+
+.donate-side{
+  display: grid;
+  gap: 18px;
+}
+
+.side-title{
+  margin: 0 0 6px;
+  color: rgba(255,215,0,0.92);
+  font-size: 18px;
+}
+
+.side-sub{
+  margin: 0 0 12px;
+  color: rgba(233,247,241,0.72);
+  font-size: 14px;
+}
+
+.link-list{
+  display: grid;
+  gap: 10px;
+}
+
+.link-card{
+  text-decoration: none;
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.link-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,215,0,0.18);
+  background: rgba(255,215,0,0.06);
+}
+
+.link-title{
+  font-weight: 850;
+  color: rgba(255,255,255,0.92);
+}
+
+.link-desc{
+  color: rgba(233,247,241,0.70);
+  font-size: 13px;
+}
+
+.link-meta{
+  color: rgba(255,243,163,0.85);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.side-footnote{
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: rgba(233,247,241,0.62);
+}
+
+/* App preview */
+.app-preview{
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  text-align:center;
+}
+
+.app-phone{
+  width: 190px;
+  height: 360px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-notch{
+  position:absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.app-screen{
+  position:absolute;
+  inset: 0;
+  padding: 44px 14px 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.app-line{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.app-line.gold{
+  background: rgba(255,215,0,0.22);
+}
+
+.app-line.short{
+  width: 60%;
+}
+
+.app-chip{
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(255,243,163,0.90);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.app-cta{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.app-btn{
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #031510;
+  font-weight: 800;
+  border: none;
+  cursor:pointer;
+  box-shadow: 0 12px 32px rgba(255,215,0,0.18);
+}
+/* FullCalendar theme integration */
+#calendar .fc {
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+#calendar .fc a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#calendar .fc .fc-toolbar-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(18px, 2.2vw, 28px);
+  color: var(--gold);
+  font-weight: 700;
+}
+
+#calendar .fc .fc-button-primary {
+  background: rgba(255,215,0,0.12);
+  border: 1px solid rgba(255,215,0,0.20);
+  color: var(--gold);
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all .2s ease;
+}
+
+#calendar .fc .fc-button-primary:hover,
+#calendar .fc .fc-button-primary.fc-button-active {
+  background: rgba(255,215,0,0.20);
+  border-color: rgba(255,215,0,0.35);
+}
+
+#calendar .fc .fc-daygrid-day {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.08);
+}
+
+#calendar .fc .fc-daygrid-day:hover {
+  background: rgba(255,215,0,0.06);
+}
+
+#calendar .fc .fc-daygrid-day.fc-day-today {
+  background: rgba(255,215,0,0.12);
+  border-color: rgba(255,215,0,0.25);
+}
+
+#calendar .fc .fc-event {
+  background: rgba(255,215,0,0.18);
+  border: 1px solid rgba(255,215,0,0.25);
+  border-radius: 8px;
+}
+
+#calendar .fc .fc-event:hover {
+  background: rgba(255,215,0,0.25);
+}
+
+#calendar .fc .fc-col-header-cell {
+  background: rgba(255,215,0,0.08);
+  color: var(--gold);
+  font-weight: 700;
+  border-color: rgba(255,215,0,0.15);
+}

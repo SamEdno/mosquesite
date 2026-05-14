@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Джамия Боголин</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">☾</div>
+      <div class="brand-text">
+        <div class="brand-title">Джамия Боголин</div>
+        <div class="brand-sub">Вяра • Общност • Традиция</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#home">Начало</a>
+      <a href="#donate">Дарения</a>
+      <a class="nav-link active" href="prayer-times.html">Часове</a>
+      <a class="nav-link" href="calendar.html">Календар</a>
+      <a href="#hadiths">Хадиси</a>
+      <a href="#contact">Контакт</a>
+    </nav>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="stars"></div>
+  <div class="moon"></div>
+
+  <div class="container hero-inner">
+    <div class="hero-card">
+      <h1>Добре дошли</h1>
+      <p>Място за духовност, общност и спокойствие.</p>
+      <span class="ayah">„Делата се оценяват според намерението.“</span>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="prayers" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Часове за молитви</h2>
+        <p class="section-sub" id="location">Зареждане на местоположението...</p>
+      </div>
+
+      <div class="card prayers-card">
+        <div class="prayers-grid" role="table" aria-label="Часове за молитви">
+          <div class="prayers-row head" role="row">
+            <div class="cell">Молитва</div>
+            <div class="cell right">Час</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Фаджр</div>
+            <div class="cell right time" id="fajr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Зухр</div>
+            <div class="cell right time" id="dhuhr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Аср</div>
+            <div class="cell right time" id="asr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Магриб</div>
+            <div class="cell right time" id="maghrib">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Иша</div>
+            <div class="cell right time" id="isha">--</div>
+          </div>
+        </div>
+
+        <div class="prayers-note">
+          <span class="dot"></span>
+          Времената се взимат автоматично според местоположението ви.
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <section id="hadiths" class="section">
+  <div class="container">
+    <div class="card hadith-card">
+      <h2>Хадис на деня</h2>
+
+      <p class="hadith-ar" dir="rtl" lang="ar">...</p>
+      <p class="hadith-bg">...</p>
+
+    </div>
+  </div>
+</section>
+
+<section id="donate" class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Дарения</h2>
+      <p class="section-sub">
+        Подкрепете общността и каузите за добри дела. Всяка помощ има значение.
+      </p>
+    </div>
+
+    <div class="donate-layout">
+      <!-- Лява карта: Основно дарение -->
+      <div class="card donate-card">
+        <div class="donate-top">
+          <div class="donate-badge">Садака • Подкрепа</div>
+          <h3 class="donate-title">Подкрепи Джамия Боголин</h3>
+          <p class="donate-text">
+            Даренията се използват за поддръжка, ремонти и дейности за общността.
+          </p>
+        </div>
+
+        <div class="donate-details">
+          <div class="donate-item">
+            <span class="donate-label">Име получател</span>
+            <span class="donate-value">Джамия Боголин</span>
+          </div>
+
+          <div class="donate-item">
+            <span class="donate-label">Банкова сметка (IBAN)</span>
+            <span class="donate-value mono">BG00 XXXX XXXX XXXX XXXX XX</span>
+          </div>
+
+          <div class="donate-item">
+            <span class="donate-label">Основание</span>
+            <span class="donate-value">Дарение / Садака</span>
+          </div>
+        </div>
+
+        <div class="donate-actions">
+          <button class="btn" type="button" onclick="copyIban()">Копирай IBAN</button>
+          <a class="btn btn-ghost" href="#contact">Свържи се за дарение</a>
+        </div>
+
+        <p class="donate-footnote">
+          * Ако нямате IBAN, може да го попълните по-късно. Важното е да има яснота и доверие.
+        </p>
+      </div>
+
+      <!-- Дясно: Препратки + Приложение -->
+      <div class="donate-side">
+        <div class="card donate-links">
+          <h3 class="side-title">Други каузи</h3>
+          <p class="side-sub">Препратки към инициативи със сходна мисия.</p>
+
+          <div class="link-list">
+            <a class="link-card" href="https://www.unicef.org/" target="_blank" rel="noopener">
+              <div class="link-title">UNICEF</div>
+              <div class="link-desc">Подкрепа за деца и образование по света.</div>
+              <div class="link-meta">Отвори сайта →</div>
+            </a>
+
+            <a class="link-card" href="https://www.redcross.org/" target="_blank" rel="noopener">
+              <div class="link-title">Red Cross / Червен кръст</div>
+              <div class="link-desc">Хуманитарна помощ и подкрепа при бедствия.</div>
+              <div class="link-meta">Отвори сайта →</div>
+            </a>
+
+            <a class="link-card" href="https://www.islamic-relief.org/" target="_blank" rel="noopener">
+              <div class="link-title">Islamic Relief</div>
+              <div class="link-desc">Помощ за нуждаещи се, храна, вода и медицинска подкрепа.</div>
+              <div class="link-meta">Отвори сайта →</div>
+            </a>
+          </div>
+
+          <p class="side-footnote">
+            Ако искаш, мога да добавя **точните български каузи**, които ти избереш (с име и линк).
+          </p>
+        </div>
+
+        <div class="card app-card">
+          <div class="app-top">
+            <div class="donate-badge">Приложение</div>
+            <h3 class="side-title">Нашето приложение</h3>
+            <p class="side-sub">
+              Виж молитвени времена, хадис на деня и важни съобщения — в един удобен формат.
+            </p>
+          </div>
+
+          <div class="app-preview">
+            <div class="app-phone">
+              <div class="app-notch"></div>
+              <div class="app-screen">
+                <div class="app-line gold"></div>
+                <div class="app-line"></div>
+                <div class="app-line"></div>
+                <div class="app-line short"></div>
+                <div class="app-chip">Prayer Times</div>
+                <div class="app-chip">Hadith</div>
+              </div>
+            </div>
+
+            <div class="app-cta">
+              <a class="btn" href="#" target="_blank" rel="noopener">Виж приложението</a>
+              <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">Изтегли (скоро)</a>
+            </div>
+          </div>
+
+          <p class="donate-footnote">
+            * Ако имаш реален линк (Google Drive / GitHub / сайт), сложи го на бутоните и ще се вижда като “preview”.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="card contact-card">
+        <h2>Контакт</h2>
+        <p class="section-sub">За въпроси и съдействие.</p>
+        <button class="btn" type="button" onclick="showMessage()">Свържи се</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © <span id="year"></span> Джамия • Всички права запазени
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

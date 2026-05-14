@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Часове за молитви — Джамия Боголин</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">☾</div>
+      <div class="brand-text">
+        <div class="brand-title">Джамия Боголин</div>
+        <div class="brand-sub">Вяра • Общност • Традиция</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="index.html#home">Начало</a>
+      <a href="index.html#donate">Дарения</a>
+      <a class="nav-link active" href="prayer-times.html">Часове</a>
+      <a class="nav-link" href="calendar.html">Календар</a>
+      <a href="index.html#hadiths">Хадиси</a>
+      <a href="index.html#contact">Контакт</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Часове за молитви</h2>
+        <p class="section-sub" id="location">Зареждане на местоположението...</p>
+      </div>
+
+      <div class="card prayers-card">
+        <div class="prayers-grid" role="table" aria-label="Часове за молитви">
+          <div class="prayers-row head" role="row">
+            <div class="cell">Молитва</div>
+            <div class="cell right">Час</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Фаджр</div>
+            <div class="cell right time" id="fajr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Зухр</div>
+            <div class="cell right time" id="dhuhr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Аср</div>
+            <div class="cell right time" id="asr">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Магриб</div>
+            <div class="cell right time" id="maghrib">--</div>
+          </div>
+
+          <div class="prayers-row" role="row">
+            <div class="cell">Иша</div>
+            <div class="cell right time" id="isha">--</div>
+          </div>
+        </div>
+
+        <div class="prayers-note">
+          <span class="dot"></span>
+          Времената се взимат автоматично според местоположението ви.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © <span id="year"></span> Джамия • Всички права запазени
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

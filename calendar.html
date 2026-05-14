@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>☾</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Календар — Джамия Боголин</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- FullCalendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="container topbar-inner">
+        <div class="brand">
+            <div class="brand-mark">☾</div>
+            <div class="brand-text">
+                <div class="brand-title">Джамия Боголин</div>
+                <div class="brand-sub">Вяра • Общност • Традиция</div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="index.html#home">Начало</a>
+            <a href="index.html#donate">Дарения</a>
+            <a class="nav-link" href="prayer-times.html">Часове</a>
+            <a class="nav-link active" href="calendar.html">Календар</a>
+            <a href="index.html#hadiths">Хадиси</a>
+            <a href="index.html#contact">Контакт</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="section">
+        <div class="container">
+            <div class="section-head">
+                <h2>Календар</h2>
+                <p class="section-sub" id="location">Зареждане на местоположението...</p>
+            </div>
+
+            <div class="card prayers-card">
+                <div id="calendar"></div>
+            </div>
+
+            <div class="card prayers-card" style="margin-top:16px;">
+                <div class="prayers-note" style="margin-bottom:12px;">
+                    <span class="dot"></span>
+                    Избери дата от календара, за да видиш молитвените времена.
+                </div>
+
+                <div class="prayers-grid" aria-label="Молитвени времена за избрана дата">
+                    <div class="prayers-row head">
+                        <div class="cell" id="selectedDateLabel">Избрана дата: --</div>
+                        <div class="cell right"></div>
+                    </div>
+
+                    <div class="prayers-row">
+                        <div class="cell">Фаджр</div>
+                        <div class="cell right time" id="fajr">--</div>
+                    </div>
+                    <div class="prayers-row">
+                        <div class="cell">Зухр</div>
+                        <div class="cell right time" id="dhuhr">--</div>
+                    </div>
+                    <div class="prayers-row">
+                        <div class="cell">Аср</div>
+                        <div class="cell right time" id="asr">--</div>
+                    </div>
+                    <div class="prayers-row">
+                        <div class="cell">Магриб</div>
+                        <div class="cell right time" id="maghrib">--</div>
+                    </div>
+                    <div class="prayers-row">
+                        <div class="cell">Иша</div>
+                        <div class="cell right time" id="isha">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        © <span id="year"></span> Джамия • Всички права запазени
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="script.js"></script>
+<script>
+    let CURRENT_LAT = null;
+    let CURRENT_LON = null;
+
+    const ISLAMIC_HOLIDAYS = {
+        "0101": "Нова година (Хиджра)",
+        "0110": "Ашура",
+        "0312": "Мавлид ан-Наби",
+        "0627": "Нощта на кадър",
+        "0701": "Ейд ал-Фитр",
+        "0710": "Ейд ал-Адха",
+    };
+
+    function setTimes(times) {
+        if (!times) return;
+        document.getElementById("fajr").textContent = times.fajr;
+        document.getElementById("dhuhr").textContent = times.dhuhr;
+        document.getElementById("asr").textContent = times.asr;
+        document.getElementById("maghrib").textContent = times.maghrib;
+        document.getElementById("isha").textContent = times.isha;
+    }
+
+    function fmtDateBG(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${day}.${m}.${y}`;
+    }
+
+    async function onDateSelected(dateObj) {
+        document.getElementById("selectedDateLabel").textContent =
+            `Избрана дата: ${fmtDateBG(dateObj)}`;
+
+        if (CURRENT_LAT == null || CURRENT_LON == null) return;
+
+        const times = await fetchPrayerTimes(CURRENT_LAT, CURRENT_LON, dateObj);
+        setTimes(times);
+    }
+
+    function getHolidayInfo(date) {
+        const key = String(date.getMonth() + 1).padStart(2, "0") + 
+                                String(date.getDate()).padStart(2, "0");
+        return ISLAMIC_HOLIDAYS[key] || null;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const calEl = document.getElementById("calendar");
+
+        const calendar = new FullCalendar.Calendar(calEl, {
+            initialView: "dayGridMonth",
+            height: "auto",
+            firstDay: 1,
+            headerToolbar: {
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,dayGridYear"
+            },
+            dateClick: (info) => onDateSelected(info.date),
+            eventDidMount: (info) => {
+                const holiday = getHolidayInfo(info.event.start);
+                if (holiday) {
+                    info.el.style.backgroundColor = "#8b5cf6";
+                    info.el.style.borderColor = "#7c3aed";
+                }
+            }
+        });
+
+        calendar.render();
+
+        // Add events for Islamic holidays
+        const currentYear = new Date().getFullYear();
+        Object.entries(ISLAMIC_HOLIDAYS).forEach(([date, title]) => {
+            const month = date.substring(0, 2);
+            const day = date.substring(2, 4);
+            calendar.addEvent({
+                title: title,
+                date: `${currentYear}-${month}-${day}`,
+                backgroundColor: "#8b5cf6",
+                borderColor: "#7c3aed"
+            });
+        });
+
+        // location name + initial times
+        const locationEl = document.getElementById("location");
+        locationEl.textContent = "Зареждане на местоположението...";
+
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            CURRENT_LAT = pos.coords.latitude;
+            CURRENT_LON = pos.coords.longitude;
+
+            try {
+                const name = await getLocationName(CURRENT_LAT, CURRENT_LON);
+                locationEl.textContent = name;
+            } catch {
+                locationEl.textContent = "Вашето местоположение";
+            }
+
+            onDateSelected(new Date());
+        }, () => {
+            locationEl.textContent = "Няма достъп до локация";
+        });
+    });
+</script>
+</body>
+</html>
